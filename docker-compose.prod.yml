@@ -1,0 +1,38 @@
+version: '3.3'
+
+services:
+    web:
+        build:
+            context: ./app
+            dockerfile: Dockerfile.prod
+        command: gunicorn django_shop.wsgi:application --bind 0.0.0.0:8000 --limit-request-line 0
+        volumes:
+            - static_volume:/home/app/web/static
+        expose:
+            - 8000
+        env_file:
+            - ./.env.prod
+        depends_on:
+            - db
+    db:
+        image: postgres:12.0-alpine
+        expose:
+            - 5432
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        env_file:
+            - ./.env.prod.db
+
+    nginx:
+        build: ./nginx
+        command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+        volumes:
+            - static_volume:/home/app/web/static
+        ports:
+            - 8080:80
+        depends_on:
+            - web
+volumes:
+    postgres_data:
+    static_volume:
+

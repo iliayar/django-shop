@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+    web:
+        build: ./app
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - ./app/:/usr/src/app
+        ports:
+            - 8000:8000
+        env_file:
+            - ./.env.dev
+        depends_on:
+            - db
+    db:
+        image: postgres:12.0-alpine
+        ports:
+            - 5432:5432
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=django_shop
+            - POSTGRES_PASSWORD=django_shop
+            - POSTGRES_DB=django_shop_db
+
+volumes:
+    postgres_data:
+
