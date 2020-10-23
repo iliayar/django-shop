@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Django shop{% endblock title %}</title>
+
+  {% load static %}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static "css/style.css" %}">
+
+</head>
+<body>
+  <header id="header">
+    <ul class="nav justify-content-center nav-pills">
+      <li class="nav-item">
+	<a class="nav-link {% if slug == 'index' %}active{% endif %}" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+	<a class="nav-link {% if slug == 'payment' %}active{% endif %}" href="/payment">Payment</a>
+      </li>
+      <li class="nav-item">
+	<a class="nav-link {% if slug == 'delivery' %}active{% endif %}" href="/delivery">Delivery</a>
+      </li>
+      <li class="nav-item">
+	<a class="nav-link {% if slug == 'warranty' %}active{% endif %}" href="/warranty">Warranty</a>
+      </li>
+      <li class="nav-item">
+	<a class="nav-link {% if slug == 'about' %}active{% endif %}" href="/about">About</a>
+      </li>
+    </ul>
+    <div class="container-fluid">
+      <div class="row">
+	<div class="col-lg-12 col-md-12 text-center">
+	  <h1 id="logo"><a href="/">{% block logotitle %}Django shop{% endblock logotitle %}</a></h1>
+	</div>
+      </div>
+    </div>
+  </header>
+  {% block content %}
+  {% endblock content %}
+  <footer id="footer">
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>
+
