@@ -1,7 +1,10 @@
 {% extends 'header.html' %}
-
 {% block content %} 
-<div class="container">
-  <p>Home page</p>
+<div class="container-fluid">
+  <div class="row-fluid post-entry">
+    {% for pr in products %}
+    {% include "includes/product.html" %}
+    {% endfor %}
+  </div>
 </div>
 {% endblock content %}
