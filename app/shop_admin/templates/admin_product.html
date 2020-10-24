@@ -1,0 +1,74 @@
+{% load static %}
+<head>
+  <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+</head>
+<body>
+  {% csrf_token %}
+  <div class="container">
+  <div class="row"><div class="col-sm"><label>Title</label></div><div class="col-sm"><input type="text" value="{{pr.title}}" id="title"></div></div>
+  <div class="row"><div class="col-sm"><label>Text description</label></div><div class="col-sm"><textarea value="" id="description">{{pr.description}}</textarea></div></div>
+  <div class="row"><div class="col-sm"><label>Description</label></div><div class="col-sm"><textarea value="" id="specification">{{pr.specification}}</textarea></div></div>
+  <div class="row"><div class="col-sm"><label>Price</label></div><div class="col-sm"><input type="text" value="{{pr.price}}" id="price"></div></div>
+  <div class="row"><div class="col-sm"><label>Category</label></div><div class="col-sm"><input type="number" id="category" value="{{pr.category.id}}"></div></div>
+  <div class = "row"><input type="button" value="Save" id="save">
+  {% if not new %} <input type="button" value="Delete" id="delete"> {% endif %}</div>
+  </div>
+  <div class="container">
+  <div class="row"><div class="col-sm"><label>Add image</label></div><div class="col-sm"><input type="file" multiple id="images"></div><div class="col-sm"><input type="button" value="Add" id = "add_image"></div></div>
+  <div class="row"><div class="col-sm"><input type="checkbox" id="replace"><label>Replace image with id: </label></div><div class="col-sm"><input type="number" id="replace_id"></div></div>
+  </div>
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script>
+    $('document').ready(()=>{
+
+	$('#save').click(()=>{
+	    var formdata = new FormData()
+	    formdata.append('title',$('#title')[0].value)
+	    formdata.append('description', $('#description')[0].value)
+	    formdata.append('specification', $('#specification')[0].value)
+	    formdata.append('price', $('#price')[0].value)
+	    formdata.append('id', {% if new %} "new" {% else %} location.pathname.split('/')[2] {% endif %})
+	    formdata.append('category', $("#category")[0].checked)
+	    var xhr = new XMLHttpRequest()
+	    xhr.open('POST', '{% url 'admin_edit' %}', true);
+	    xhr.setRequestHeader('X-CSRFToken', $('input[name="csrfmiddlewaretoken"]')[0].value)
+	    xhr.onload = function() {
+		{% if new %} window.location.replace('/shop_admin/'+ this.responseText) {% endif %} 
+	    }
+	    xhr.send(formdata)
+	})
+
+	$('#add_image').click(()=>{
+	    var formdata = new FormData()
+	    var files  = $('#images')[0].files
+	    formdata.append('replace',$('#replace')[0].checked)
+	    formdata.append('replace_id', $('#replace_id')[0].value)
+	    formdata.append('id', location.pathname.split('/')[2])
+	    for (var i = 0; i < files.length; i++) {
+		var file = files[i];
+
+		formdata.append('files', file);
+	    }
+
+	    var xhr = new XMLHttpRequest();
+	    xhr.open('POST', '/shop_admin/img', true);
+	    xhr.setRequestHeader('X-CSRFToken', $('input[name="csrfmiddlewaretoken"]')[0].value)
+	    xhr.send(formdata);
+	})
+
+	$('#delete').click(()=>{
+	    $.ajax({
+		type: 'GET',
+		url: '/shop_admin/delete',
+		data: {
+		    id: location.pathname.split('/')[2],
+		},
+		success: ()=>{
+		    window.location.replace('/shop_admin')
+		}
+	    })
+	})
+
+    })
+  </script>
+</body>

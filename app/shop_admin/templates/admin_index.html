@@ -1,0 +1,14 @@
+<h1>Products</h1>
+{% for pr in products %}
+    <p><a href="{% url 'admin_product' pr.id %}">{{pr.title}}</a></p>
+
+{% endfor %}
+
+<p> <a href="{% url 'admin_product' 'new' %}">Create</a></p>
+
+<h1>Categories</h1>
+{% for cat in categories %}
+    <p><a href="{% url 'admin_category' cat.id %}">{{cat.name}}</a></p>
+{% endfor %}
+
+<p> <a href="{% url 'admin_category' 'new' %}">Create</a></p>

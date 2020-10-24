@@ -1,0 +1,45 @@
+{% load static %}
+<head>
+  <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+</head>
+<body>
+  {% csrf_token %}
+  <div class="container">
+  <div class="row"><div class="col-sm"><label>Name</label></div><div class="col-sm"><input type="text" id="name" value="{{cat.name}}"></div></div>
+  <div class="row"><div class="col-sm"><input type="checkbox" id="has_description" {% if cat.has_description %} checked {% endif %}><label>Has description</label></div></div>
+  <div class = "row"><input type="button" value="Save" id="save">
+  {% if not new %} <input type="button" value="Delete" id="delete"> {% endif %}</div>
+  </div>
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script>
+    $('document').ready(()=>{
+
+	$('#save').click(()=>{
+	    var formdata = new FormData()
+	    formdata.append('id', {% if new %} "new" {% else %} location.pathname.split('/')[3] {% endif %})
+	    formdata.append('name', $("#name")[0].value)
+	    formdata.append('has_description',$('#has_description')[0].checked)
+	    var xhr = new XMLHttpRequest()
+	    xhr.open('POST', '{% url 'admin_edit_category' %}', true);
+	    xhr.setRequestHeader('X-CSRFToken', $('input[name="csrfmiddlewaretoken"]')[0].value)
+	    xhr.onload = function() {
+		{% if new %} window.location.replace('/shop_admin/category/'+ this.responseText) {% endif %} 
+	    }
+	    xhr.send(formdata)
+	})
+
+	$('#delete').click(()=>{
+	    var formdata = new FormData()
+	    formdata.append('id', location.pathname.split('/')[3])
+	    var xhr = new XMLHttpRequest()
+	    xhr.open('POST', '{% url 'admin_delete_category' %}', true);
+	    xhr.setRequestHeader('X-CSRFToken', $('input[name="csrfmiddlewaretoken"]')[0].value)
+	    xhr.onload = function() {
+		window.location.replace('/shop_admin')
+	    }
+	    xhr.send(formdata)
+	})
+
+    })
+  </script>
+</body>
