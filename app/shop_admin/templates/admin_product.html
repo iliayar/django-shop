@@ -6,10 +6,19 @@
   {% csrf_token %}
   <div class="container">
   <div class="row"><div class="col-sm"><label>Title</label></div><div class="col-sm"><input type="text" value="{{pr.title}}" id="title"></div></div>
-  <div class="row"><div class="col-sm"><label>Text description</label></div><div class="col-sm"><textarea value="" id="description">{{pr.description}}</textarea></div></div>
-  <div class="row"><div class="col-sm"><label>Description</label></div><div class="col-sm"><textarea value="" id="specification">{{pr.specification}}</textarea></div></div>
+  <div class="row"><div class="col-sm"><label>Description</label></div><div class="col-sm"><textarea value="" id="description">{{pr.description}}</textarea></div></div>
+  <div class="row"><div class="col-sm"><label>Specification</label></div><div class="col-sm"><textarea value="" id="specification">{{pr.specification}}</textarea></div></div>
   <div class="row"><div class="col-sm"><label>Price</label></div><div class="col-sm"><input type="text" value="{{pr.price}}" id="price"></div></div>
-  <div class="row"><div class="col-sm"><label>Category</label></div><div class="col-sm"><input type="number" id="category" value="{{pr.category.id}}"></div></div>
+  <div class="row"><div class="col-sm"><label for="category">Category</label>
+    </div><div class="col-sm">
+      <select name="category" id="category">
+	{% for cat in categories %}
+	<option value="{{cat.id}}" {% if cat.id == pr.category.id %}selected{% endif %}>{{cat.name}}</option>
+	{% endfor %}
+      </select>
+    </div>
+  </div>
+  <!-- <div class="row"><div class="col-sm"><label>Category</label></div><div class="col-sm"><input type="number" id="category" value="{{pr.category.id}}"></div></div> -->
   <div class = "row"><input type="button" value="Save" id="save">
   {% if not new %} <input type="button" value="Delete" id="delete"> {% endif %}</div>
   </div>
@@ -28,12 +37,14 @@
 	    formdata.append('specification', $('#specification')[0].value)
 	    formdata.append('price', $('#price')[0].value)
 	    formdata.append('id', {% if new %} "new" {% else %} location.pathname.split('/')[2] {% endif %})
-	    formdata.append('category', $("#category")[0].checked)
+	    formdata.append('category', $("#category")[0].value)
 	    var xhr = new XMLHttpRequest()
 	    xhr.open('POST', '{% url 'admin_edit' %}', true);
 	    xhr.setRequestHeader('X-CSRFToken', $('input[name="csrfmiddlewaretoken"]')[0].value)
 	    xhr.onload = function() {
-		{% if new %} window.location.replace('/shop_admin/'+ this.responseText) {% endif %} 
+		if(this.status == 200) {
+		    {% if new %} window.location.replace('/shop_admin/'+ this.responseText) {% endif %} 
+		}
 	    }
 	    xhr.send(formdata)
 	})
@@ -51,7 +62,7 @@
 	    }
 
 	    var xhr = new XMLHttpRequest();
-	    xhr.open('POST', '/shop_admin/img', true);
+	    xhr.open('POST', '{% url 'admin_image' %}', true);
 	    xhr.setRequestHeader('X-CSRFToken', $('input[name="csrfmiddlewaretoken"]')[0].value)
 	    xhr.send(formdata);
 	})
@@ -59,7 +70,7 @@
 	$('#delete').click(()=>{
 	    $.ajax({
 		type: 'GET',
-		url: '/shop_admin/delete',
+		url: '{% url 'admin_delete' %}',
 		data: {
 		    id: location.pathname.split('/')[2],
 		},

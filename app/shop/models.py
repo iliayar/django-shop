@@ -7,6 +7,7 @@ class Category(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=100, default='')
     img_cnt = models.IntegerField(default=0)
-    price = models.PositiveIntegerField()
-    specification = models.JSONField()
-    category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    price = models.PositiveIntegerField(default=0)
+    specification = models.JSONField(default=dict)
+    description = models.TextField(default='')
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, default=None)
