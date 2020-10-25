@@ -1,0 +1,44 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="container-fluid">
+	<div class="row post-entry single-entry">
+		<div class="product col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
+		<p class="animate-box pr-title">{{pr.title}}</p>
+		<span class="meta date animate-box">Price: {{pr.price}}</span>
+		<div id="myCarousel" class="carousel slide animate-box" data-ride="carousel">
+			<div class="carousel-inner">
+				{% for i in images %}
+					{% include "includes/carousel_item.html" with id=pr.id i=i %}
+				{% endfor %}
+			</div>
+			<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+				<span class = "glyphicon glyphicon-chevron-left">
+				</span>
+			</a>
+			<a class="right carousel-control" href="#myCarousel" data-slide="next">
+				<span class = "glyphicon glyphicon-chevron-right">
+				</span>
+			</a>
+		</div>
+
+		<div class = "animate-box">
+		<div class="descriptions">{{pr.description|safe}}</div>
+		</div>
+		
+		<table class="table animate-box table-striped">
+		{% for name, value in pr.specification.items %}
+			<tr>
+				<td >{{name}}</td>
+				<td >{{value}}</td>
+			</tr>
+
+		{% endfor %} 
+		
+		</table>
+
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

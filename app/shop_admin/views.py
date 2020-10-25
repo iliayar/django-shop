@@ -172,6 +172,9 @@ def handle_uploaded_file(f, pr_id, id):
             destination.write(chunk)
 
 def validate(request):
+    response = HttpResponse()
+    response.status_code = 401
+    response['WWW-Authenticate'] = 'Basic realm="%s"' % "Basci Auth Protected"
     if 'HTTP_AUTHORIZATION' in request.META:
         auth = request.META['HTTP_AUTHORIZATION'].split()
         if(len(auth) == 2):
@@ -179,7 +182,4 @@ def validate(request):
                 user, password = base64.b64decode(auth[1]).decode().split(':')
                 if password == os.environ.get('ADMIN_PASS', ''):
                     return True
-                response = HttpResponse()
-                response.status_code = 401
-                response['WWW-Authenticate'] = 'Basic realm="%s"' % "Basci Auth Protected"
     return response

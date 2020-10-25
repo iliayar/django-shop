@@ -11,6 +11,11 @@
 <body>
   <header id="header">
     <ul class="nav justify-content-center nav-pills">
+      {% for cat in categories %}
+      <li class="nav-item">
+	<a class="nav-link {% if slug == cat.id %}active{% endif %}" href="{% url 'category' cat.id %}">{{cat.name}}</a>
+      </li>
+      {% endfor %}
       <li class="nav-item">
 	<a class="nav-link {% if slug == 'index' %}active{% endif %}" href="/">Home</a>
       </li>

@@ -1,0 +1,90 @@
+/* Header */
+.nav>li{
+  display: inline-block;
+  float: none;
+}
+.nav{
+  text-align: center;
+}
+.nav-link.active {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}
+.active{
+  padding: 5px 10px !important;
+  margin: 5px 5px;
+}
+#header a {
+  color: #000;
+}
+#header {
+  padding-top: 0px !important;
+}
+html {
+  background: #fff;
+}
+body {
+  font-family: "Roboto", arial, sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: #222;
+  background: #fff;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", times, serif;
+  color: #000;
+}
+
+/* Product item on main page */
+.product > figure {
+    display: inline-block;
+}
+.product {
+    align-content: center;
+}
+.product > figure img{
+  height: 300px;
+  max-width: none !important;
+}
+
+.post-entry .product {
+  text-align: center;
+  float: left;
+  margin-bottom: 0px;
+  padding-left: 3em;
+  padding-right: 3em;
+}
+.post-entry .product a img {
+  opacity: 1;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+.post-entry .product a:hover img {
+  opacity: .4;
+}
+.post-entry .product h2 {
+  font-family: "Playfair Display", times, serif;
+  font-size: 34px;
+  color: #000;
+  margin-bottom: 30px;
+}
+.post-entry .product h2 a {
+  color: #000;
+}
+.post-entry .product h3 a {
+  color: #000;
+}
+.post-entry .product .meta {
+  font-size: 16px;
+  font-family: "Roboto", arial, sans-serif;
+  color: #999999;
+  display: block;
+}
+.post-entry .product .meta.price {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.animate-box {
+    opacity: 0;
+}

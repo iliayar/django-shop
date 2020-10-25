@@ -1,11 +1,13 @@
-from django.urls import path
+from django.urls import path, reverse, re_path
 
-from .views import static_page, index
+from . import views
 
 urlpatterns = [
-    path('', index),
-    path('warranty', static_page('warranty')),
-    path('about', static_page('about')),
-    path('payment', static_page('payment')),
-    path('delivery', static_page('delivery')),
+    path('', views.index),
+    path('warranty', views.static_page('warranty')),
+    path('about', views.static_page('about')),
+    path('payment', views.static_page('payment')),
+    path('delivery', views.static_page('delivery')),
+    re_path('^category/(?P<id>\d+)', views.category, name='category'),
+    re_path('^product/(?P<id>\d+)', views.product, name='product')
 ]
