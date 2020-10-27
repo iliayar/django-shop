@@ -27,7 +27,7 @@
 
 	contentWayPoint();
 	
-	$('img').click(e => {
+	$('.viewable').click(e => {
 	    openImg($(e.target).attr('src'))
 	})
 

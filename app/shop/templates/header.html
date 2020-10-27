@@ -42,6 +42,10 @@
   </header>
   {% block content %}
   {% endblock content %}
+  <div id="imgViewer" hidden>
+    <p>Click anywhere to close</p>
+    <img scr="" id="viewerImg">
+  </div>
   <footer id="footer">
   </footer>
   <script src="{% static "js/jquery.min.js" %}"></script>

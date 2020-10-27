@@ -1,15 +1,18 @@
 {% load static %}
-<div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 col-xxs-12 animate-box product">
-    <figure>
-      
-      {% if cat.has_description %}<a href="{% url 'product' pr.id %}">{% endif %}
-	<img src="/media/{{pr.id}}/0.jpg" alt="Image" class="center img-responsive">
+<div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 col-xxs-12 animate-box product {% if not cat.has_description %}accessory{% endif %}">
+  <figure>
+    
+    {% if cat.has_description %}<a href="{% url 'product' pr.id %}">{% endif %}
+      <img src="/media/{{pr.id}}/0.jpg" alt="Image" class="{% if not cat.has_description %}viewable {% endif %}center img-responsive">
       {% if cat.has_description %}</a>{% endif %}
-    </figure>
-    <h3 class="article-title">
-      {% if cat.has_description %}<a href="{% url 'product' pr.id %}">{% endif %}
-	{{pr.title}}
+  </figure>
+  <h3 class="article-title">
+    {% if cat.has_description %}<a href="{% url 'product' pr.id %}">{% endif %}
+      {{pr.title}}
       {% if cat.has_description %}</a>{% endif %}
-    </h3>
+  </h3>
+  <p>
+    {% if not cat.has_description %}{{pr.description}}{% endif %}
     <span class="meta price">Price: {{pr.price}}</span>
+  </p>
 </div>
