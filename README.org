@@ -1,5 +1,6 @@
 * Shop
 Test shop application in django
+Used in another project
 ** Production Setup
 1. create /.env.prod/
    Exmaple content
@@ -26,7 +27,6 @@ Test shop application in django
 4. ~docker-compose -f docker-compose.prod.yml up -d~
 5. ~docker-compose -f docker-compose.prod.yml exec web python manage.py migrate~
 6. ~docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --clear~
-7. ~docker-compose -f docker-compose.prod.yml exec web python manage.py loaddata dump.json~
 *** Other
 - Restart after changes: ~docker-compose -f docker-compose.prod.yml up -d --build~
 - Stop: ~docker-compose -f docker-compose.prod.yml down -v~
@@ -35,7 +35,7 @@ Test shop application in django
 server {
     listen 443 ssl;
 
-    server_name ruscenar.com;
+    server_name example.com;
 
     location / {
         proxy_pass http://127.0.0.1:8080/;
@@ -45,7 +45,7 @@ server {
 server {
     listen 80;
 
-    server_name ruscenar.com;
+    server_name example.com;
 
     location / {
         proxy_pass http://127.0.0.1:8080/;
@@ -72,6 +72,5 @@ Env for db is set in /docker-compose.yml/
 3. ~docker-compose up -d~
 5. ~docker-compose exec web python manage.py migrate~
 6. ~docker-compose exec web python manage.py collectstatic --clear~
-7. ~docker-compose exec web python manage.py loaddata dump.json~
 *** Other
 - Restart after changes with ~docker-compose up -d --build~
