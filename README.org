@@ -1,5 +1,5 @@
 * Shop
-Test shop application in django
+Test shop application in django \\
 Used in another project
 ** Production Setup
 1. create /.env.prod/
