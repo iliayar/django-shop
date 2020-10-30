@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-SECRET_KEY = os.environ.get("SECRET_KEY", "7h3r3_1s_n0_53cr3t_k3y")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=0)) 
@@ -33,12 +33,13 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost 0.0.0.0 ::0").
 # Application definition
 
 INSTALLED_APPS = [
-    'shop',
-    'shop_admin',
-    'rest_framework',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'rest_framework',
+    'shop',
+    'shop_admin',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -102,6 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+ADMIN_PASS = os.environ.get('ADMIN_PASS')
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/

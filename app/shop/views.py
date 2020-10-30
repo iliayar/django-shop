@@ -17,7 +17,8 @@ def static_page(page):
     return handler
 
 def index(request):
-
+    """Starting page"""
+    
     categories = Category.objects.all()
 
     if(len(categories) == 0):
@@ -30,7 +31,8 @@ def index(request):
     return HttpResponseRedirect(reverse(category, kwargs={'id': categories[0].id}))
 
 def category(request, id):
-
+    """Category view, display all products in category.
+       Empty page if there are no any categories"""
     cat = Category.objects.get(id = id)
     
     context = {
@@ -44,7 +46,7 @@ def category(request, id):
     
 
 def product(request, id):
-
+    """Product view, displays product information"""
     pr = Product.objects.get(id = id)
     cat = pr.category
     

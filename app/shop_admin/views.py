@@ -8,7 +8,7 @@ from shop.models import Category, Product
 from django.http import HttpResponse, Http404
 from rest_framework.parsers import JSONParser
 
-from .serializers import ProductSerializer, CategorySerializer
+from api.serializers import ProductSerializer, CategorySerializer
 
 def shop_admin(request):
     validation = validate(request)
